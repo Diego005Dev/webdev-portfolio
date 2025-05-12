@@ -1,0 +1,158 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "about": "Sobre Mí",
+    "projects": "Proyectos",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "switchToEnglish": "English",
+    "switchToSpanish": "Español",
+    "forward": "Siguiente Era",
+    "backward": "Era Anterior",
+    "eightBitVersion": "Era 8-bit",
+    "sixteenBitVersion": "Era 16-bit",
+    "thirtyTwoBitVersion": "Era 32-bit"
+  },
+  "eras": {
+    "8bit": "Era 8-bit (1980s)",
+    "16bit": "Era 16-bit (1990s)",
+    "32bit": "Era 32-bit (2000s)"
+  },
+  "home": {
+    "hero": {
+      "greeting": "Hola, soy Diego Ramírez",
+      "title": "Desarrollador Frontend",
+      "description": "Me especializo en crear aplicaciones web modernas y responsivas utilizando las últimas tecnologías como React, Next.js y TypeScript.",
+      "viewWork": "Ver Mi Trabajo",
+      "contactMe": "Contáctame"
+    },
+    "about": {
+      "title": "Sobre Mí",
+      "subtitle": "Desarrollador Frontend con pasión por crear experiencias web modernas",
+      "description": "Soy estudiante de Ingeniería en Sistemas Computacionales con experiencia en desarrollo web, interfaces responsivas, consumo de APIs y optimización de rendimiento. Estoy comprometido con el aprendizaje continuo y la colaboración técnica.",
+      "learnMore": "Conoce más sobre mí",
+      "skills": ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "Diseño Responsivo", "Integración de APIs"]
+    },
+    "projects": {
+      "title": "Proyectos Destacados",
+      "viewAll": "Ver todos los proyectos"
+    },
+    "contact": {
+      "title": "¿Interesado en trabajar juntos?",
+      "description": "Siempre estoy abierto a discutir nuevos proyectos, ideas creativas u oportunidades para ser parte de tu visión. ¡Creemos algo increíble juntos!",
+      "cta": "Ponte en Contacto"
+    },
+    "retro": {
+      "title": "Explora Mi Portafolio Retro",
+      "description": "Echa un vistazo a la versión anterior de mi portafolio con tres diferentes eras de computación retro, cada una con estilos visuales únicos.",
+      "viewRetro": "Ver Portafolio Retro"
+    }
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "professionalSummary": {
+      "title": "Resumen Profesional",
+      "description": "Estudiante de Ingeniería en Sistemas Computacionales con experiencia en desarrollo web, interfaces responsivas, consumo de APIs y optimización de rendimiento. Conocimientos en HTML, CSS, JavaScript, TypeScript, React, Next.js, Tailwind CSS y Supabase. Comprometido con el aprendizaje continuo y la colaboración técnica."
+    },
+    "education": {
+      "title": "Educación"
+    },
+    "professionalGoal": {
+      "title": "Objetivo Profesional",
+      "description": "Busco un rol como Desarrollador Frontend Junior en un equipo donde pueda aplicar mis habilidades, aprender continuamente y contribuir al desarrollo de soluciones digitales accesibles e innovadoras."
+    },
+    "technicalSkills": {
+      "title": "Habilidades Técnicas",
+      "categories": {
+        "languages": "Lenguajes",
+        "frameworks": "Frameworks",
+        "tools": "Herramientas",
+        "practices": "Prácticas"
+      }
+    },
+    "downloadResume": "Descargar Currículum"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "description": "Aquí hay algunos de los proyectos en los que he trabajado. Cada proyecto representa diferentes habilidades y tecnologías que he dominado a lo largo de mi trayectoria como desarrollador.",
+    "liveDemo": "Demo en Vivo",
+    "viewCode": "Código",
+    "project1": {
+      "title": "Aplicación del Clima",
+      "summary": "Una aplicación de clima en tiempo real usando la API de OpenWeatherMap.",
+      "description": "Una aplicación de clima responsiva que muestra las condiciones climáticas actuales basadas en la ubicación del usuario. Las características incluyen detección automática de ubicación, íconos de clima y transiciones suaves."
+    },
+    "project2": {
+      "title": "Generador de Prompts para ChatGPT",
+      "summary": "Una herramienta para crear prompts efectivos para ChatGPT.",
+      "description": "Una interfaz basada en formularios para ayudar a los programadores a crear prompts efectivos para ChatGPT. Compatible con inglés y español con detección automática de idioma."
+    },
+    "project3": {
+      "title": "Carrusel Animado",
+      "summary": "Un carrusel interactivo con animaciones suaves.",
+      "description": "Una aplicación web interactiva que presenta criaturas míticas y héroes legendarios a través de una interfaz atractiva y animada con transiciones suaves."
+    },
+    "project4": {
+      "title": "Frutas y Verduras Dibet",
+      "summary": "Plataforma de comercio electrónico para un negocio local de productos agrícolas.",
+      "description": "Una plataforma de comercio electrónico full-stack que permite pedidos en línea, gestión de inventario y cumplimiento de pedidos para un negocio local de productos agrícolas."
+    }
+  },
+  "services": {
+    "title": "Servicios",
+    "description": "Ofrezco servicios especializados de desarrollo web adaptados a tus necesidades específicas. Actualmente, me enfoco en soluciones de comercio electrónico y paquetes de desarrollo de sitios web, con más servicios próximamente.",
+    "cta": {
+      "title": "¿Interesado en trabajar juntos?",
+      "description": "Si estás interesado en alguno de estos servicios o tienes un proyecto personalizado en mente, no dudes en contactarme. Estaré encantado de discutir cómo puedo ayudarte a hacer realidad tu visión.",
+      "button": "Ponte en Contacto"
+    },
+    "comingSoon": "Próximamente"
+  },
+  "contact": {
+    "title": "Contáctame",
+    "description": "Siempre estoy abierto a discutir nuevos proyectos, ideas creativas u oportunidades para ser parte de tu visión. No dudes en contactarme utilizando el formulario a continuación o a través de mi información de contacto.",
+    "form": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "sending": "Enviando...",
+      "send": "Enviar Mensaje",
+      "success": "¡Tu mensaje ha sido enviado con éxito! Me pondré en contacto contigo pronto.",
+      "error": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo."
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "location": "Ubicación"
+    }
+  },
+  "footer": {
+    "description": "Desarrollador Frontend especializado en tecnologías web modernas",
+    "rights": "Todos los derechos reservados."
+  },
+  "ui": {
+    "readMore": "Leer más",
+    "showLess": "Mostrar menos"
+  },
+  "sections": {
+    "about": {
+      "title": "SOBRE MÍ",
+      "profileAlt": "Foto de perfil de Diego Ramírez",
+      "paragraph1": "Soy un Desarrollador Frontend apasionado por crear aplicaciones web modernas y responsivas. Me especializo en React, Next.js y TypeScript, y siempre estoy ansioso por aprender nuevas tecnologías.",
+      "paragraph2": "Cuando no estoy programando, disfruto jugando videojuegos, viendo películas y pasando tiempo con mi familia. También soy un gran fanático de la computación retro y la historia de los videojuegos, lo que inspiró el diseño único de este portafolio."
+    },
+    "projects": {
+      "title": "MIS PROYECTOS",
+      "openProject": "ABRIR",
+      "viewProject": "VER",
+      "visitProject": "Visitar"
+    },
+    "contact": {
+      "title": "CONTÁCTAME"
+    }
+  }
+}
