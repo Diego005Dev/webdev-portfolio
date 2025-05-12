@@ -1,0 +1,158 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "services": "Services",
+    "contact": "Contact",
+    "switchToEnglish": "English",
+    "switchToSpanish": "Español",
+    "forward": "Next Era",
+    "backward": "Previous Era",
+    "eightBitVersion": "8-bit Era",
+    "sixteenBitVersion": "16-bit Era",
+    "thirtyTwoBitVersion": "32-bit Era"
+  },
+  "eras": {
+    "8bit": "8-bit Era (1980s)",
+    "16bit": "16-bit Era (1990s)",
+    "32bit": "32-bit Era (2000s)"
+  },
+  "home": {
+    "hero": {
+      "greeting": "Hi, I'm Diego Ramírez",
+      "title": "Frontend Developer",
+      "description": "I specialize in creating modern, responsive web applications using the latest technologies like React, Next.js, and TypeScript.",
+      "viewWork": "View My Work",
+      "contactMe": "Contact Me"
+    },
+    "about": {
+      "title": "About Me",
+      "subtitle": "Frontend Developer with a passion for creating modern web experiences",
+      "description": "I'm a Computer Systems Engineering student with experience in web development, responsive interfaces, API consumption, and performance optimization. I'm committed to continuous learning and technical collaboration.",
+      "learnMore": "Learn more about me",
+      "skills": ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "Responsive Design", "API Integration"]
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "viewAll": "View all projects"
+    },
+    "contact": {
+      "title": "Interested in working together?",
+      "description": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Let's create something amazing together!",
+      "cta": "Get in Touch"
+    },
+    "retro": {
+      "title": "Explore My Retro Portfolio",
+      "description": "Check out the previous version of my portfolio featuring three different retro computing eras with unique visual styles.",
+      "viewRetro": "View Retro Portfolio"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "professionalSummary": {
+      "title": "Professional Summary",
+      "description": "Computer Systems Engineering student with experience in web development, responsive interfaces, API consumption, and performance optimization. Knowledgeable in HTML, CSS, JavaScript, TypeScript, React, Next.js, Tailwind CSS, and Supabase. Committed to continuous learning and technical collaboration."
+    },
+    "education": {
+      "title": "Education"
+    },
+    "professionalGoal": {
+      "title": "Professional Goal",
+      "description": "I am seeking a role as a Junior Frontend Developer in a team where I can apply my skills, continuously learn, and contribute to the development of accessible and innovative digital solutions."
+    },
+    "technicalSkills": {
+      "title": "Technical Skills",
+      "categories": {
+        "languages": "Languages",
+        "frameworks": "Frameworks",
+        "tools": "Tools",
+        "practices": "Practices"
+      }
+    },
+    "downloadResume": "Download Resume"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Here are some of the projects I've worked on. Each project represents different skills and technologies I've mastered throughout my journey as a developer.",
+    "liveDemo": "Live Demo",
+    "viewCode": "Code",
+    "project1": {
+      "title": "Weather App",
+      "summary": "A real-time weather application using OpenWeatherMap API.",
+      "description": "A responsive weather application that displays current weather conditions based on user location. Features include automatic location detection, weather icons, and smooth transitions."
+    },
+    "project2": {
+      "title": "ChatGPT Prompt Generator",
+      "summary": "A tool to create effective prompts for ChatGPT.",
+      "description": "A form-based interface to help programmers create effective prompts for ChatGPT. Supports both English and Spanish with automatic language detection."
+    },
+    "project3": {
+      "title": "Animated Carousel",
+      "summary": "An interactive carousel with smooth animations.",
+      "description": "An interactive web application that presents mythical creatures and legendary heroes through an engaging, animated interface with smooth transitions."
+    },
+    "project4": {
+      "title": "Dibet Fruits and Vegetables",
+      "summary": "E-commerce platform for a local produce business.",
+      "description": "A full-stack e-commerce platform enabling online ordering, inventory management, and order fulfillment for a local produce business."
+    }
+  },
+  "services": {
+    "title": "Services",
+    "description": "I offer specialized web development services tailored to meet your specific needs. Currently, I'm focused on e-commerce solutions and website development packages, with more services coming soon.",
+    "cta": {
+      "title": "Interested in working together?",
+      "description": "If you're interested in any of these services or have a custom project in mind, feel free to reach out. I'd be happy to discuss how I can help bring your vision to life.",
+      "button": "Get in Touch"
+    },
+    "comingSoon": "Coming Soon"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "description": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out using the form below or through my contact information.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "sending": "Sending...",
+      "send": "Send Message",
+      "success": "Your message has been sent successfully! I'll get back to you soon.",
+      "error": "There was an error sending your message. Please try again."
+    },
+    "info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "phone": "Phone",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "location": "Location"
+    }
+  },
+  "footer": {
+    "description": "Frontend Developer specializing in modern web technologies",
+    "rights": "All rights reserved."
+  },
+  "ui": {
+    "readMore": "Read more",
+    "showLess": "Show less"
+  },
+  "sections": {
+    "about": {
+      "title": "ABOUT ME",
+      "profileAlt": "Diego Ramírez profile picture",
+      "paragraph1": "I'm a Frontend Developer with a passion for creating modern, responsive web applications. I specialize in React, Next.js, and TypeScript, and I'm always eager to learn new technologies.",
+      "paragraph2": "When I'm not coding, I enjoy playing video games, watching movies, and spending time with my family. I'm also a big fan of retro computing and video game history, which inspired this portfolio's unique design."
+    },
+    "projects": {
+      "title": "MY PROJECTS",
+      "openProject": "OPEN",
+      "viewProject": "VIEW",
+      "visitProject": "Visit"
+    },
+    "contact": {
+      "title": "CONTACT ME"
+    }
+  }
+}
