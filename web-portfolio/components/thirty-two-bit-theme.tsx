@@ -2,6 +2,12 @@
 
 import { useTheme } from "next-themes"
 import { useEffect } from "react"
+import { Orbitron } from "next/font/google"
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-orbitron",
+})
 
 export function ThirtyTwoBitTheme() {
   const { theme, setTheme } = useTheme()
@@ -24,6 +30,7 @@ export function ThirtyTwoBitTheme() {
   return (
     <style jsx global>{`
     body {
+      ${orbitron.variable}
       background: ${
         isDark
           ? "linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d)"

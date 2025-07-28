@@ -2,6 +2,13 @@
 
 import { useTheme } from "next-themes"
 import { useEffect } from "react"
+import { VT323 } from "next/font/google"
+
+const vt323 = VT323({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-vt323",
+})
 
 export function SixteenBitTheme() {
   const { theme, setTheme } = useTheme()
@@ -24,6 +31,7 @@ export function SixteenBitTheme() {
   return (
     <style jsx global>{`
       body {
+        ${vt323.variable}
         background-color: ${isDark ? "#4a6cd4" : "#c4d8ff"};
         color: ${isDark ? "#ffffff" : "#2c3cd4"};
         font-family: var(--font-vt323), monospace;

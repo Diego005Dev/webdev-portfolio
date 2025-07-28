@@ -2,6 +2,13 @@
 
 import { useTheme } from "next-themes"
 import { useEffect } from "react"
+import { Press_Start_2P } from "next/font/google"
+
+const pressStart2P = Press_Start_2P({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-press-start-2p",
+})
 
 export function EightBitTheme() {
   const { theme, setTheme } = useTheme()
@@ -24,6 +31,7 @@ export function EightBitTheme() {
   return (
     <style jsx global>{`
       body {
+        ${pressStart2P.variable}
         background-color: ${isDark ? "#0f380f" : "#c8e8c8"};
         color: ${isDark ? "#8bac0f" : "#306230"};
         font-family: var(--font-press-start-2p), monospace;
