@@ -50,6 +50,7 @@ export default function RootLayout({
   return (
     <html lang={params.lang} suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body
