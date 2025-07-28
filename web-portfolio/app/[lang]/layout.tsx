@@ -9,13 +9,11 @@ import { getDictionary } from "@/i18n"
 
 const inter = Inter({
   subsets: ["latin"],
-  display: "swap",
   variable: "--font-inter",
 })
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  display: "swap",
   variable: "--font-playfair",
 })
 
@@ -23,20 +21,17 @@ const playfair = Playfair_Display({
 const pressStart2P = Press_Start_2P({
   weight: "400",
   subsets: ["latin"],
-  display: "swap",
   variable: "--font-press-start-2p",
 })
 
 const vt323 = VT323({
   weight: "400",
   subsets: ["latin"],
-  display: "swap",
   variable: "--font-vt323",
 })
 
 const orbitron = Orbitron({
   subsets: ["latin"],
-  display: "swap",
   variable: "--font-orbitron",
 })
 
