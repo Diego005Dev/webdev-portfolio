@@ -42,7 +42,6 @@ const nextConfig = {
   },
   // For static export, we need to make sure we don't use headers() in pages
   // output: 'export',
-  distDir: 'out',
 }
 
 export default nextConfig;
