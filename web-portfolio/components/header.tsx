@@ -96,7 +96,7 @@ export default function Header({ lang }: HeaderProps) {
             ))}
             <LanguageSwitcher currentLang={lang} />
             <div className="inline-flex items-center justify-center">
-              <ThemeToggle />
+              <ThemeToggle dictionary={dictionary} />
             </div>
           </nav>
 
@@ -104,7 +104,7 @@ export default function Header({ lang }: HeaderProps) {
           <div className="flex items-center md:hidden">
             <LanguageSwitcher currentLang={lang} />
             <div className="inline-flex items-center justify-center">
-              <ThemeToggle />
+              <ThemeToggle dictionary={dictionary} />
             </div>
             <button
               onClick={toggleMenu}

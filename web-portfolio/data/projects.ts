@@ -6,7 +6,7 @@ export const getProjects = (dict: Dictionary) => [
     title: dict.projects.project4.title,
     description: dict.projects.project4.description,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FVDibet.jpg-xyifaTJIV0Za1SW2pFVIXPUDh4ZHHQ.jpeg",
-    technologies: ["Next.js 13", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
+    technologies: ["Next.js 13", "TypeScript", "PostgreSQL", "Tailwind CSS"],
     liveUrl: "https://www.fvdibet.com/",
     githubUrl: "https://github.com/Diego005/FVDibet",
   },

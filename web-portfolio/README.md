@@ -4,18 +4,29 @@ A portfolio website that showcases different retro computing eras with unique vi
 
 ![Retro Portfolio Preview](https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pacman.jpg-5x2rd66DqO81J1d3vTFaT1J29lAazk.jpeg)
 
-## Features
+## Internationalization (i18n)
 
-- Three distinct visual themes representing different computing eras:
-  - 8-bit era (1980s): Gameboy-inspired pixelated design with limited color palette
-  - 16-bit era (1990s): SNES/Genesis-inspired design with more colors and smoother edges
-  - 32-bit era (Late 1990s/Early 2000s): PlayStation/N64-inspired design with gradients and modern UI elements
-- Responsive design that works on mobile, tablet, and desktop
-- Internationalization support (English and Spanish)
-- Custom Pac-Man themed loading animations for each era
-- Interactive project cards with expandable descriptions
-- Contact links with era-appropriate hover effects
-- Smooth transitions between eras
+This portfolio supports automatic language detection based on browser preferences:
+
+- **Automatic Detection**: The site automatically detects the user's preferred language from browser settings
+- **Supported Languages**: English (en) and Spanish (es)
+- **Fallback**: Defaults to English if the detected language is not supported
+- **Manual Override**: Users can manually switch languages using the language switcher in the header
+
+### How Language Detection Works
+
+1. When a user visits the root URL (`/`), the middleware detects their browser's `Accept-Language` header
+2. The system matches the preferred language against supported locales using `intl-localematcher`
+3. Users are automatically redirected to the appropriate language route (`/en` or `/es`)
+4. The language preference is maintained throughout navigation
+
+### Testing Language Detection
+
+To test the automatic language detection:
+
+1. **Firefox/Chrome**: Go to Settings → Language and set Spanish as preferred
+2. **Clear browser cache** and visit the site - it should redirect to Spanish
+3. **Browser DevTools**: Check Network tab to see the redirect from `/` to `/es`
 
 ## Technologies Used
 

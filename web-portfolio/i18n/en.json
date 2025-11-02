@@ -21,17 +21,17 @@
   "home": {
     "hero": {
       "greeting": "Hi, I'm Diego Ramírez",
-      "title": "Frontend Developer",
-      "description": "I specialize in creating modern, responsive web applications using the latest technologies like React, Next.js, and TypeScript.",
+      "title": "Full Stack Web Developer",
+      "description": "I specialize in creating modern, responsive web applications using the latest technologies like React, Next.js, TypeScript, Node.js, and PostgreSQL.",
       "viewWork": "View My Work",
       "contactMe": "Contact Me"
     },
     "about": {
       "title": "About Me",
-      "subtitle": "Frontend Developer with a passion for creating modern web experiences",
+      "subtitle": "Full Stack Web Developer with a passion for creating modern web experiences",
       "description": "I'm a Computer Systems Engineering student with experience in web development, responsive interfaces, API consumption, and performance optimization. I'm committed to continuous learning and technical collaboration.",
       "learnMore": "Learn more about me",
-      "skills": ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "Responsive Design", "API Integration"]
+      "skills": ["React.js", "Next.js", "TypeScript", "Node.js", "Next.js API Routes", "Tailwind CSS", "PostgreSQL", "Responsive Design", "API Integration"]
     },
     "projects": {
       "title": "Featured Projects",
@@ -52,14 +52,14 @@
     "title": "About Me",
     "professionalSummary": {
       "title": "Professional Summary",
-      "description": "Computer Systems Engineering student with experience in web development, responsive interfaces, API consumption, and performance optimization. Knowledgeable in HTML, CSS, JavaScript, TypeScript, React, Next.js, Tailwind CSS, and Supabase. Committed to continuous learning and technical collaboration."
+      "description": "Computer Systems Engineering student with experience in web development, responsive interfaces, API consumption, and performance optimization. Knowledgeable in HTML, CSS, JavaScript, TypeScript, React, Next.js, Tailwind CSS, Node.js, and PostgreSQL. Committed to continuous learning and technical collaboration."
     },
     "education": {
       "title": "Education"
     },
     "professionalGoal": {
       "title": "Professional Goal",
-      "description": "I am seeking a role as a Junior Frontend Developer in a team where I can apply my skills, continuously learn, and contribute to the development of accessible and innovative digital solutions."
+      "description": "I am seeking a role as a Junior Full Stack Web Developer in a team where I can apply my skills, continuously learn, and contribute to the development of accessible and innovative digital solutions."
     },
     "technicalSkills": {
       "title": "Technical Skills",
@@ -95,7 +95,7 @@
     "project4": {
       "title": "Dibet Fruits and Vegetables",
       "summary": "E-commerce platform for a local produce business.",
-      "description": "A full-stack e-commerce platform enabling online ordering, inventory management, and order fulfillment for a local produce business."
+      "description": "A full-stack e-commerce platform enabling online ordering, inventory management, and order fulfillment for a local produce business. Built with Next.js for frontend and API routes, TypeScript, Tailwind CSS, and PostgreSQL for database management."
     }
   },
   "services": {
@@ -103,15 +103,15 @@
     "description": "I offer specialized web development services tailored to meet your specific needs. Currently, I'm focused on e-commerce solutions and website development packages, with more services coming soon.",
     "ecommerce": {
       "title": "E-commerce Development",
-      "description": "Custom e-commerce solutions built with modern technologies like Next.js, Supabase, and PostgreSQL. Features include product management, shopping cart, order processing, and inventory management."
+      "description": "Custom e-commerce solutions built with modern technologies like Next.js and PostgreSQL. Features include product management, shopping cart, order processing, and inventory management."
     },
     "website": {
       "title": "Website Development Package",
       "description": "Complete website development package including design, development, hosting, and domain registration. Perfect for small businesses and personal brands looking to establish an online presence."
     },
     "frontend": {
-      "title": "Frontend Development",
-      "description": "Custom frontend development using React, Next.js, and other modern frameworks. Focus on responsive design, accessibility, and performance optimization."
+      "title": "Full Stack Development",
+      "description": "Complete full stack development using React, Next.js, Node.js, PostgreSQL, and other modern technologies. From frontend UI to backend APIs and database management."
     },
     "api": {
       "title": "API Integration",
@@ -147,18 +147,28 @@
     }
   },
   "footer": {
-    "description": "Frontend Developer specializing in modern web technologies",
+    "description": "Full Stack Web Developer specializing in modern web technologies",
     "rights": "All rights reserved."
   },
   "ui": {
     "readMore": "Read more",
-    "showLess": "Show less"
+    "showLess": "Show less",
+    "languageSwitcher": {
+      "changeLanguage": "Change language",
+      "currentLanguage": "Current language: {language}",
+      "switchTo": "Switch to {language}"
+    },
+    "themeToggle": {
+      "switchToLight": "Switch to light theme",
+      "switchToDark": "Switch to dark theme",
+      "currentTheme": "Currently using {theme} theme"
+    }
   },
   "sections": {
     "about": {
       "title": "ABOUT ME",
       "profileAlt": "Diego Ramírez profile picture",
-      "paragraph1": "I'm a Frontend Developer with a passion for creating modern, responsive web applications. I specialize in React, Next.js, and TypeScript, and I'm always eager to learn new technologies.",
+      "paragraph1": "I'm a Full Stack Web Developer with a passion for creating modern, responsive web applications. I specialize in React, Next.js, TypeScript, Node.js, and PostgreSQL, and I'm always eager to learn new technologies.",
       "paragraph2": "When I'm not coding, I enjoy playing video games, watching movies, and spending time with my family. I'm also a big fan of retro computing and video game history, which inspired this portfolio's unique design."
     },
     "projects": {

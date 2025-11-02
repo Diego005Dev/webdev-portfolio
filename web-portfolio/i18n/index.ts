@@ -7,6 +7,16 @@ export type Dictionary = {
     contact: string
     switchToEnglish: string
     switchToSpanish: string
+    forward: string
+    backward: string
+    eightBitVersion: string
+    sixteenBitVersion: string
+    thirtyTwoBitVersion: string
+  }
+  eras: {
+    "8bit": string
+    "16bit": string
+    "32bit": string
   }
   home: {
     hero: {
@@ -67,10 +77,46 @@ export type Dictionary = {
     description: string
     liveDemo: string
     viewCode: string
+    project1: {
+      title: string
+      summary: string
+      description: string
+    }
+    project2: {
+      title: string
+      summary: string
+      description: string
+    }
+    project3: {
+      title: string
+      summary: string
+      description: string
+    }
+    project4: {
+      title: string
+      summary: string
+      description: string
+    }
   }
   services: {
     title: string
     description: string
+    ecommerce: {
+      title: string
+      description: string
+    }
+    website: {
+      title: string
+      description: string
+    }
+    frontend: {
+      title: string
+      description: string
+    }
+    api: {
+      title: string
+      description: string
+    }
     cta: {
       title: string
       description: string
@@ -103,6 +149,37 @@ export type Dictionary = {
   footer: {
     description: string
     rights: string
+  }
+  ui: {
+    readMore: string
+    showLess: string
+    languageSwitcher: {
+      changeLanguage: string
+      currentLanguage: string
+      switchTo: string
+    }
+    themeToggle: {
+      switchToLight: string
+      switchToDark: string
+      currentTheme: string
+    }
+  }
+  sections: {
+    about: {
+      title: string
+      profileAlt: string
+      paragraph1: string
+      paragraph2: string
+    }
+    projects: {
+      title: string
+      openProject: string
+      viewProject: string
+      visitProject: string
+    }
+    contact: {
+      title: string
+    }
   }
 }
 

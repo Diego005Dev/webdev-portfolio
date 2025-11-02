@@ -26,7 +26,7 @@ export default function AboutPageClient({ dictionary, lang }: AboutPageClientPro
     },
     {
       category: dict.about.technicalSkills.categories.tools,
-      items: ["Git", "GitHub", "Figma", "Tailwind CSS", "Vite", "Supabase"],
+      items: ["Git", "GitHub", "Figma", "Tailwind CSS", "Vite", "PostgreSQL"],
     },
     {
       category: dict.about.technicalSkills.categories.practices,

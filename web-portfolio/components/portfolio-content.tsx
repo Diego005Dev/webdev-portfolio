@@ -205,7 +205,11 @@ export function PortfolioContent({ currentEra, dictionary }: PortfolioContentPro
           {projects.map((project, index) => (
             <div
               key={index}
-              ref={(el) => (projectRefs.current[index] = el)}
+              ref={(el) => {
+                if (projectRefs.current) {
+                  projectRefs.current[index] = el;
+                }
+              }}
               className={cn(
                 "group relative overflow-hidden transition-all duration-300",
                 currentEra === "8bit" && "border-4 border-[#8bac0f] dark:border-[#8bac0f]",
@@ -222,11 +226,13 @@ export function PortfolioContent({ currentEra, dictionary }: PortfolioContentPro
                 className="w-full aspect-[16/9] relative"
                 onClick={project.link ? () => window.open(project.link, "_blank") : undefined}
               >
-                <img
+                <Image
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
+                  fill
+                  priority={index === 0}
                   className={cn(
-                    "w-full h-full object-cover",
+                    "object-cover",
                     currentEra === "8bit" && "pixel-image",
                     currentEra === "16bit" && "semi-pixel-image",
                   )}

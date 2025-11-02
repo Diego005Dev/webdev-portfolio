@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: { lang: string } })
 
   return {
     title: `${dict.contact.title} | Diego Ramírez`,
-    description: "Get in touch with Diego Ramírez for web development projects and collaborations",
+    description: dict.contact.description,
   }
 }
 
