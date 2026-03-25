@@ -77,7 +77,7 @@ export default function ContactForm({ dictionary }: ContactFormProps) {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder={dict.contact.form.name}
+            placeholder={dict.contact.form.placeholders?.name ?? dict.contact.form.name}
             required
             className="bg-neutral-50 dark:bg-neutral-700 border-neutral-200 dark:border-neutral-600"
           />
@@ -92,7 +92,7 @@ export default function ContactForm({ dictionary }: ContactFormProps) {
             type="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder={dict.contact.form.email}
+            placeholder={dict.contact.form.placeholders?.email ?? dict.contact.form.email}
             required
             className="bg-neutral-50 dark:bg-neutral-700 border-neutral-200 dark:border-neutral-600"
           />
@@ -107,7 +107,7 @@ export default function ContactForm({ dictionary }: ContactFormProps) {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
-          placeholder={dict.contact.form.subject}
+          placeholder={dict.contact.form.placeholders?.subject ?? dict.contact.form.subject}
           required
           className="bg-neutral-50 dark:bg-neutral-700 border-neutral-200 dark:border-neutral-600"
         />
@@ -121,7 +121,7 @@ export default function ContactForm({ dictionary }: ContactFormProps) {
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder={dict.contact.form.message}
+          placeholder={dict.contact.form.placeholders?.message ?? dict.contact.form.message}
           required
           rows={6}
           className="bg-neutral-50 dark:bg-neutral-700 border-neutral-200 dark:border-neutral-600 resize-none"

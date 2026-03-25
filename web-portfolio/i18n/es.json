@@ -132,6 +132,12 @@
       "email": "Correo Electrónico",
       "subject": "Asunto",
       "message": "Mensaje",
+      "placeholders": {
+        "name": "Juan Pérez",
+        "email": "juan.perez@correo.com",
+        "subject": "Cotización para sitio web",
+        "message": "Hola, estoy interesado en desarrollar una tienda en línea. ¿Podrías enviarme presupuesto y plazos?"
+      },
       "sending": "Enviando...",
       "send": "Enviar Mensaje",
       "success": "¡Tu mensaje ha sido enviado con éxito! Me pondré en contacto contigo pronto.",

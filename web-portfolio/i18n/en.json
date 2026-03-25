@@ -132,6 +132,12 @@
       "email": "Email",
       "subject": "Subject",
       "message": "Message",
+      "placeholders": {
+        "name": "Juan Pérez",
+        "email": "juan.perez@mail.com",
+        "subject": "Website quote",
+        "message": "Hi, I'm interested in developing an online store. Could you send pricing and estimated timelines?"
+      },
       "sending": "Sending...",
       "send": "Send Message",
       "success": "Your message has been sent successfully! I'll get back to you soon.",
