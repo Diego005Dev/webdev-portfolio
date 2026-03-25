@@ -23,8 +23,8 @@ export default function ContactPageClient({ dictionary, lang }: ContactPageClien
     {
       icon: <Phone className="h-6 w-6 text-petrol" />,
       label: dict.contact.info.phone,
-      value: "+52 771 364 9377",
-      link: "tel:+527713649377",
+      value: "55 4871 6993",
+      link: "tel:+525548716993",
     },
     {
       icon: <Linkedin className="h-6 w-6 text-petrol" />,

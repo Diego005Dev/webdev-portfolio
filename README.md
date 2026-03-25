@@ -138,6 +138,8 @@ pnpm lint     # análisis de código
 ## 📬 Contacto profesional
 
 - Email: **metallica3999@gmail.com**
+- Teléfono: **55 4871 6993**
+- WhatsApp: **77 1364 9377**
 - LinkedIn: [diego-ramírez-67b227238](https://linkedin.com/in/diego-ramírez-67b227238)
 - GitHub: [@Diego005Dev](https://github.com/Diego005Dev)
 
