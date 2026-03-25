@@ -141,6 +141,7 @@
       "title": "Contact Information",
       "email": "Email",
       "phone": "Phone",
+      "whatsapp": "WhatsApp",
       "linkedin": "LinkedIn",
       "github": "GitHub",
       "location": "Location"

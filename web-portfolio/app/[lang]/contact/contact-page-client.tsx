@@ -27,6 +27,12 @@ export default function ContactPageClient({ dictionary, lang }: ContactPageClien
       link: "tel:+525548716993",
     },
     {
+      icon: <Phone className="h-6 w-6 text-petrol" />,
+      label: dict.contact.info.whatsapp,
+      value: "77 1364 9377",
+      link: "https://wa.me/527713649377",
+    },
+    {
       icon: <Linkedin className="h-6 w-6 text-petrol" />,
       label: dict.contact.info.linkedin,
       value: "diego-ramírez-67b227238",
