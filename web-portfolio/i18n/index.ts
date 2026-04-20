@@ -194,5 +194,6 @@ const dictionaries: Record<string, Dictionary> = {
 
 export const getDictionary = async (locale: string): Promise<Dictionary> => {
   // Fallback to 'en' if the locale is not supported
-  return dictionaries[locale in dictionaries ? locale : "en"]
+  // Use a safe lookup instead of indexing with a boolean (previous code used `locale in dictionaries` incorrectly)
+  return dictionaries[locale] ?? dictionaries['en']
 }

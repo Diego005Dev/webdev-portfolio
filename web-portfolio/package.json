@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
+    "audit:axe": "npx -y @axe-core/cli http://localhost:3000 --save --output axe-report.json || true",
+    "audit:lighthouse": "npx -y lighthouse http://localhost:3000 --only-categories=accessibility --output=json --output-path=./lighthouse-report.json || true",
     "lint": "next lint"
   },
   "dependencies": {
@@ -49,11 +51,11 @@
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "negotiator": "latest",
-    "next": "14.2.35",
+    "next": "^16.2.4",
     "next-themes": "latest",
-    "react": "^18",
+    "react": "latest",
     "react-day-picker": "8.10.1",
-    "react-dom": "^18",
+    "react-dom": "latest",
     "react-hook-form": "^7.54.1",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
@@ -66,8 +68,8 @@
   "devDependencies": {
     "@types/negotiator": "^0.6.4",
     "@types/node": "^22",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"

@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 import type { Dictionary } from "@/i18n"
 
 interface HeroProps {
@@ -62,10 +63,13 @@ export default function Hero({ dictionary, lang }: HeroProps) {
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-3/4 h-3/4 rounded-full overflow-hidden border-4 border-white dark:border-neutral-700">
-                  <img
+                  <Image
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/opcion1%281%29.jpg-OxlzXTJYH8I63eiSIxrEUIRxKMvmrY.jpeg"
                     alt="Diego Ramírez"
+                    width={600}
+                    height={600}
                     className="w-full h-full object-cover"
+                    priority
                   />
                 </div>
               </div>

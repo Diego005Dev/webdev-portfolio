@@ -82,9 +82,6 @@ const SidebarProvider = React.forwardRef<
         } else {
           _setOpen(openState)
         }
-
-        // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
       },
       [setOpenProp, open]
     )
@@ -115,6 +112,17 @@ const SidebarProvider = React.forwardRef<
     // We add a state so that we can do data-state="expanded" or "collapsed".
     // This makes it easier to style the sidebar with Tailwind classes.
     const state = open ? "expanded" : "collapsed"
+
+    // Persist the `open` state to a cookie. Keep side-effects out of setters to
+    // make the API testable and predictable. This effect runs whenever `open`
+    // changes and writes the cookie accordingly.
+    React.useEffect(() => {
+      try {
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      } catch (e) {
+        // Silently ignore in environments where document is not available
+      }
+    }, [open])
 
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
@@ -524,11 +532,15 @@ const sidebarMenuButtonVariants = cva(
         default: "h-8 text-sm",
         sm: "h-7 text-xs",
         lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
+      state: {
+        default: "",
+        active: "",
       },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      state: "default",
     },
   }
 )
@@ -562,7 +574,13 @@ const SidebarMenuButton = React.forwardRef<
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        className={cn(
+          // Map the boolean isActive into the cva `state` variant. We keep
+          // the isActive prop for backwards compatibility while centralizing
+          // visual styles in the cva definition.
+          sidebarMenuButtonVariants({ variant, size, state: isActive ? "active" : "default" }),
+          className
+        )}
         {...props}
       />
     )
@@ -601,6 +619,12 @@ const SidebarMenuAction = React.forwardRef<
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
 
+  // Use cva-like mapping via conditional class application. Keep the
+  // showOnHover boolean for backwards compatibility but centralize the
+  // hoverable variant styling here.
+  const hoverableClass =
+    "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
+
   return (
     <Comp
       ref={ref}
@@ -613,8 +637,7 @@ const SidebarMenuAction = React.forwardRef<
         "peer-data-[size=default]/menu-button:top-1.5",
         "peer-data-[size=lg]/menu-button:top-2.5",
         "group-data-[collapsible=icon]:hidden",
-        showOnHover &&
-          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+        showOnHover ? hoverableClass : "",
         className
       )}
       {...props}
@@ -662,6 +685,8 @@ const SidebarMenuSkeleton = React.forwardRef<
       className={cn("rounded-md h-8 flex gap-2 px-2 items-center", className)}
       {...props}
     >
+      {/* Keep showIcon for compatibility, but prefer a variant prop in
+          future to express skeleton styles. */}
       {showIcon && (
         <Skeleton
           className="size-4 rounded-md"

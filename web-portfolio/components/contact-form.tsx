@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
+import { usePathname } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -15,6 +16,17 @@ interface ContactFormProps {
 
 export default function ContactForm({ dictionary }: ContactFormProps) {
   const dict = dictionary
+  const pathname = usePathname()
+
+  // Helper to preserve locale base (e.g. /en or /es). If the app is rooted
+  // at /[lang], we need to post to /{lang}/api/contact. Otherwise fallback to ''
+  const routerBase = () => {
+    // pathname like '/en/contact' -> base '/en'
+    if (!pathname) return ''
+    const parts = pathname.split('/')
+    if (parts.length > 1 && parts[1].length === 2) return `/${parts[1]}`
+    return ''
+  }
 
   const [formData, setFormData] = useState({
     name: "",
@@ -40,13 +52,19 @@ export default function ContactForm({ dictionary }: ContactFormProps) {
 
     // Simulate form submission
     try {
-      // In a real application, you would send the form data to your backend
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      setSubmitStatus({
-        type: "success",
-        message: dict.contact.form.success,
+      // Send to server-side endpoint
+      const res = await fetch(`/${routerBase()}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       })
+
+      if (res.status === 201) {
+        setSubmitStatus({ type: 'success', message: dict.contact.form.success })
+      } else {
+        const body = await res.json().catch(() => ({}))
+        setSubmitStatus({ type: 'error', message: body?.error || dict.contact.form.error })
+      }
 
       // Reset form
       setFormData({
@@ -55,15 +73,15 @@ export default function ContactForm({ dictionary }: ContactFormProps) {
         subject: "",
         message: "",
       })
-    } catch (error) {
-      setSubmitStatus({
-        type: "error",
-        message: dict.contact.form.error,
-      })
-    } finally {
-      setIsSubmitting(false)
+      } catch (error) {
+        setSubmitStatus({
+          type: "error",
+          message: dict.contact.form.error,
+        })
+      } finally {
+        setIsSubmitting(false)
+      }
     }
-  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
