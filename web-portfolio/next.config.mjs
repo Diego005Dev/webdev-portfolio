@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  eslint: {
-    // Enable lint checks during build. Set to false to fail the build on lint errors.
-    ignoreDuringBuilds: false,
-  },
   typescript: {
     // Do not ignore TypeScript build errors — fail the build so issues are caught early.
     ignoreBuildErrors: false,
