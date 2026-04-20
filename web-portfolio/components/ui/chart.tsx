@@ -267,17 +267,17 @@ const ChartLegend = RechartsPrimitive.Legend
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-      /** Use `compact` to hide icons/labels, `full` to show them */
-      variant?: ChartTooltipVariant
-      nameKey?: string
-    }
->(
-  (
-    { className, variant = "full", payload, verticalAlign = "bottom", nameKey },
-    ref
-  ) => {
+  React.ComponentProps<"div"> & {
+    payload?: any[]
+    verticalAlign?: RechartsPrimitive.LegendProps['verticalAlign']
+    /** Use `compact` to hide icons/labels, `full` to show them */
+    variant?: ChartTooltipVariant
+    nameKey?: string
+  }
+>((
+  { className, variant = "full", payload, verticalAlign = "bottom", nameKey },
+  ref
+) => {
     const { config } = useChart()
 
     if (!payload?.length) {
