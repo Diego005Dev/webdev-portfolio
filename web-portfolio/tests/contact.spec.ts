@@ -19,19 +19,19 @@ describe('Contact schema', () => {
 describe('Rate limiter', () => {
   beforeEach(() => resetRateLimitStore())
 
-  it('allows requests under the limit', () => {
+  it('allows requests under the limit', async () => {
     const ip = '1.2.3.4'
     for (let i = 0; i < 6; i++) {
-      const exceeded = rateLimitExceededForIp(ip)
-      if (i < 6) expect(exceeded).toBe(false)
+      const exceeded = await rateLimitExceededForIp(ip)
+      expect(exceeded).toBe(false)
     }
   })
 
-  it('blocks after exceeding limit', () => {
+  it('blocks after exceeding limit', async () => {
     const ip = '1.2.3.5'
     let last = false
     for (let i = 0; i < 7; i++) {
-      last = rateLimitExceededForIp(ip)
+      last = await rateLimitExceededForIp(ip)
     }
     expect(last).toBe(true)
   })

@@ -132,6 +132,13 @@ export type Dictionary = {
         email: string
         subject: string
         message: string
+        errors?: {
+          name?: string
+          emailRequired?: string
+          emailInvalid?: string
+          subject?: string
+          message?: string
+        }
         // Optional placeholders for inputs
         placeholders?: {
           name?: string

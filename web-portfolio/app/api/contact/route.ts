@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     const ip = extractIp(req)
 
-    if (rateLimitExceededForIp(ip)) {
+    if (await rateLimitExceededForIp(ip)) {
       return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
     }
 

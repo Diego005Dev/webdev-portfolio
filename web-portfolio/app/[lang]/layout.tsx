@@ -40,14 +40,13 @@ export async function generateMetadata({ params }: { params: { lang: string } })
 export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode
-    params: { lang: string }
+    // Accept either a plain params object or a promise that resolves to it
+    params: { lang: string } | Promise<{ lang: string }>
   }>
 ) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    children
-  } = props;
+  const { children } = props
 
   return (
     <html lang={params.lang} suppressHydrationWarning>

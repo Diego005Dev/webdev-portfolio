@@ -90,7 +90,7 @@ export default function LanguageSwitcher({ currentLang, currentEra, dictionary }
               className={cn(
                 "flex items-center gap-2 px-3 py-2 h-9 text-neutral-700 dark:text-neutral-300",
                 "hover:text-petrol dark:hover:text-petrol-light hover:bg-neutral-100 dark:hover:bg-neutral-800",
-                "focus:outline-none focus:ring-2 focus:ring-petrol focus:ring-offset-2 dark:focus:ring-offset-neutral-900",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-900",
                 "transition-all duration-200 rounded-md",
                 isOpen && "bg-neutral-100 dark:bg-neutral-800 text-petrol dark:text-petrol-light"
               )}
@@ -135,7 +135,7 @@ export default function LanguageSwitcher({ currentLang, currentEra, dictionary }
               className={cn(
                 "w-full flex items-center justify-between px-4 py-3 text-left",
                 "hover:bg-neutral-50 dark:hover:bg-neutral-700",
-                "focus:outline-none focus:bg-neutral-50 dark:focus:bg-neutral-700",
+                "focus:outline-none focus-visible:bg-neutral-50 dark:focus-visible:bg-neutral-700",
                 "transition-colors duration-150 first:rounded-t-md last:rounded-b-md",
                 currentLang === lang.code && "bg-petrol/10 dark:bg-petrol/20 text-petrol dark:text-petrol-light"
               )}

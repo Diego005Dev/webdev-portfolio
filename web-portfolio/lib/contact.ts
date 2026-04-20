@@ -19,22 +19,38 @@ export function resetRateLimitStore() {
   ipMap.clear()
 }
 
-export function rateLimitExceededForIp(ip: string) {
-  const now = Date.now()
-  const entry = ipMap.get(ip)
-  if (!entry) {
-    ipMap.set(ip, { count: 1, firstSeen: now })
-    return false
-  }
+// Default implementation uses in-memory logic. We delegate to lib/rate-limiter
+// when available to support Upstash Redis in production.
+import { isRateLimited, resetInMemory } from './rate-limiter'
 
-  if (now - entry.firstSeen > RATE_LIMIT_WINDOW_MS) {
-    ipMap.set(ip, { count: 1, firstSeen: now })
-    return false
-  }
+export async function rateLimitExceededForIp(ip: string) {
+  // If Upstash env is configured, isRateLimited will attempt to use it.
+  try {
+    const limited = await isRateLimited(ip)
+    return limited
+  } catch (err) {
+    // Fallback to in-memory (legacy) behavior
+    const now = Date.now()
+    const entry = ipMap.get(ip)
+    if (!entry) {
+      ipMap.set(ip, { count: 1, firstSeen: now })
+      return false
+    }
 
-  entry.count += 1
-  ipMap.set(ip, entry)
-  return entry.count > MAX_REQUESTS_PER_WINDOW
+    if (now - entry.firstSeen > RATE_LIMIT_WINDOW_MS) {
+      ipMap.set(ip, { count: 1, firstSeen: now })
+      return false
+    }
+
+    entry.count += 1
+    ipMap.set(ip, entry)
+    return entry.count > MAX_REQUESTS_PER_WINDOW
+  }
+}
+
+export function resetRateLimitStores() {
+  ipMap.clear()
+  resetInMemory()
 }
 
 export function extractIp(req: { headers?: Record<string, string> } | NextRequest) {

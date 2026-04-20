@@ -203,7 +203,8 @@ const Sidebar = React.forwardRef<
     if (isMobile) {
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <SheetContent
+      <SheetContent
+            id="sidebar-mobile"
             data-sidebar="sidebar"
             data-mobile="true"
             className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
@@ -255,6 +256,7 @@ const Sidebar = React.forwardRef<
           {...props}
         >
           <div
+            id="sidebar-desktop"
             data-sidebar="sidebar"
             className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
           >
@@ -271,7 +273,10 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, isMobile, open, openMobile } = useSidebar()
+
+  const expanded = isMobile ? openMobile : open
+  const controls = isMobile ? "sidebar-mobile" : "sidebar-desktop"
 
   return (
     <Button
@@ -284,6 +289,8 @@ const SidebarTrigger = React.forwardRef<
         onClick?.(event)
         toggleSidebar()
       }}
+      aria-expanded={expanded}
+      aria-controls={controls}
       {...props}
     >
       <PanelLeft />
@@ -304,7 +311,11 @@ const SidebarRail = React.forwardRef<
       ref={ref}
       data-sidebar="rail"
       aria-label="Toggle Sidebar"
-      tabIndex={-1}
+      // Make the rail keyboard-focusable so keyboard users can toggle the
+      // sidebar. We intentionally set tabIndex=0 to allow tab focus. If the
+      // rail should be skipped in the tab order in specific contexts, callers
+      // can override via props.
+      tabIndex={0}
       onClick={toggleSidebar}
       title="Toggle Sidebar"
       className={cn(

@@ -57,7 +57,7 @@ export function ThemeToggle({ dictionary }: ThemeToggleProps) {
               "text-neutral-700 dark:text-neutral-300",
               "hover:text-petrol dark:hover:text-petrol-light",
               "hover:bg-neutral-100 dark:hover:bg-neutral-800",
-              "focus:outline-none focus:ring-2 focus:ring-petrol focus:ring-offset-2 dark:focus:ring-offset-neutral-900",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-900",
               "transition-all duration-200 rounded-md",
               isAnimating && "scale-110"
             )}
