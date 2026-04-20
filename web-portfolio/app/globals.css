@@ -72,8 +72,11 @@
 }
 
 @layer base {
+  /* Set a sensible default border color using CSS variables.
+     Tailwind utility `border-border` was removed; use plain CSS here to
+     avoid build-time errors and keep the same visual result. */
   * {
-    @apply border-border;
+    border-color: rgb(var(--border));
   }
   body {
     @apply bg-background text-foreground;
