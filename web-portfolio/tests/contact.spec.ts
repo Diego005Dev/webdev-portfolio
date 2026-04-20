@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { ContactSchema, rateLimitExceededForIp, resetRateLimitStore, extractIp } from '@/lib/contact'
+import { ContactSchema, rateLimitExceededForIp, resetRateLimitStore, extractIp } from '../lib/contact'
 
 describe('Contact schema', () => {
   it('accepts valid payloads', () => {

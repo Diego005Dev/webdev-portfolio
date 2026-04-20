@@ -2,10 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
-    ignoreDuringBuilds: true,
+    // Enable lint checks during build. Set to false to fail the build on lint errors.
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    // Do not ignore TypeScript build errors — fail the build so issues are caught early.
+    ignoreBuildErrors: false,
   },
   images: {
     // Enable Next.js Image Optimization for remote images. Previously this
