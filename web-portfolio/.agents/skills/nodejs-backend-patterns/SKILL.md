@@ -235,69 +235,7 @@ export class UserService {
 
 **Repository Layer:**
 
-```typescript
-// repositories/user.repository.ts
-import { Pool } from "pg";
-import { CreateUserDTO, UpdateUserDTO, UserEntity } from "../types/user.types";
-
-export class UserRepository {
-  constructor(private db: Pool) {}
-
-  async create(
-    userData: CreateUserDTO & { password: string },
-  ): Promise<UserEntity> {
-    const query = `
-      INSERT INTO users (name, email, password)
-      VALUES ($1, $2, $3)
-      RETURNING id, name, email, password, created_at, updated_at
-    `;
-    const { rows } = await this.db.query(query, [
-      userData.name,
-      userData.email,
-      userData.password,
-    ]);
-    return rows[0];
-  }
-
-  async findById(id: string): Promise<UserEntity | null> {
-    const query = "SELECT * FROM users WHERE id = $1";
-    const { rows } = await this.db.query(query, [id]);
-    return rows[0] || null;
-  }
-
-  async findByEmail(email: string): Promise<UserEntity | null> {
-    const query = "SELECT * FROM users WHERE email = $1";
-    const { rows } = await this.db.query(query, [email]);
-    return rows[0] || null;
-  }
-
-  async update(id: string, updates: UpdateUserDTO): Promise<UserEntity | null> {
-    const fields = Object.keys(updates);
-    const values = Object.values(updates);
-
-    const setClause = fields
-      .map((field, idx) => `${field} = $${idx + 2}`)
-      .join(", ");
-
-    const query = `
-      UPDATE users
-      SET ${setClause}, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $1
-      RETURNING *
-    `;
-
-    const { rows } = await this.db.query(query, [id, ...values]);
-    return rows[0] || null;
-  }
-
-  async delete(id: string): Promise<boolean> {
-    const query = "DELETE FROM users WHERE id = $1";
-    const { rowCount } = await this.db.query(query, [id]);
-    return rowCount > 0;
-  }
-}
-```
-
+See references/nodejs-backend-patterns/repositories.md for the repository-layer example and database patterns (Postgres queries, transaction pattern, connection pooling).
 ### Pattern 2: Dependency Injection
 
 Use a DI container to wire up repositories, services, and controllers. For a full container implementation, see [references/advanced-patterns.md](references/advanced-patterns.md).
@@ -306,111 +244,10 @@ Use a DI container to wire up repositories, services, and controllers. For a ful
 
 ### Authentication Middleware
 
-```typescript
-// middleware/auth.middleware.ts
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { UnauthorizedError } from "../utils/errors";
-
-interface JWTPayload {
-  userId: string;
-  email: string;
-  // Optional roles array used by authorize middleware
-  roles?: string[];
-}
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: JWTPayload;
-    }
-  }
-}
-
-export const authenticate = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const token = req.headers.authorization?.replace("Bearer ", "");
-
-    if (!token) {
-      throw new UnauthorizedError("No token provided");
-    }
-
-    const payload = jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
-
-    req.user = payload;
-    next();
-  } catch (error) {
-    next(new UnauthorizedError("Invalid token"));
-  }
-};
-
-export const authorize = (...roles: string[]) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    if (!req.user) {
-      return next(new UnauthorizedError("Not authenticated"));
-    }
-
-    // Check if user has required role
-    const hasRole = roles.some((role) => req.user?.roles?.includes(role));
-
-    if (!hasRole) {
-      return next(new UnauthorizedError("Insufficient permissions"));
-    }
-
-    next();
-  };
-};
-```
-
+See references/nodejs-backend-patterns/middleware.md for authentication, authorization, validation, and rate-limiting middleware examples.
 ### Validation Middleware
 
-```typescript
-// middleware/validation.middleware.ts
-import { Request, Response, NextFunction } from "express";
-import { AnyZodObject, ZodError } from "zod";
-import { ValidationError } from "../utils/errors";
-
-export const validate = (schema: AnyZodObject) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await schema.parseAsync({
-        body: req.body,
-        query: req.query,
-        params: req.params,
-      });
-      next();
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          field: err.path.join("."),
-          message: err.message,
-        }));
-        next(new ValidationError("Validation failed", errors));
-      } else {
-        next(error);
-      }
-    }
-  };
-};
-
-// Usage with Zod
-import { z } from "zod";
-
-const createUserSchema = z.object({
-  body: z.object({
-    name: z.string().min(1),
-    email: z.string().email(),
-    password: z.string().min(8),
-  }),
-});
-
-router.post("/users", validate(createUserSchema), userController.createUser);
-```
-
+See references/nodejs-backend-patterns/middleware.md for validation middleware examples and usage with Zod.
 ### Rate Limiting Middleware
 
 ```typescript
@@ -449,45 +286,7 @@ export const authLimiter = rateLimit({
 
 ### Request Logging Middleware
 
-```typescript
-// middleware/logger.middleware.ts
-import { Request, Response, NextFunction } from "express";
-import pino from "pino";
-
-const logger = pino({
-  level: process.env.LOG_LEVEL || "info",
-  transport: {
-    target: "pino-pretty",
-    options: { colorize: true },
-  },
-});
-
-export const requestLogger = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const start = Date.now();
-
-  // Log response when finished
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    logger.info({
-      method: req.method,
-      url: req.url,
-      status: res.statusCode,
-      duration: `${duration}ms`,
-      userAgent: req.headers["user-agent"],
-      ip: req.ip,
-    });
-  });
-
-  next();
-};
-
-export { logger };
-```
-
+See references/nodejs-backend-patterns/middleware.md for the request logger example and logger export.
 ## Error Handling
 
 ### Custom Error Classes
@@ -542,56 +341,7 @@ export class ConflictError extends AppError {
 
 ### Global Error Handler
 
-```typescript
-// middleware/error-handler.ts
-import { Request, Response, NextFunction } from "express";
-import { AppError, ValidationError } from "../utils/errors";
-import { logger } from "./logger.middleware";
-
-export const errorHandler = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).json({
-      status: "error",
-      message: err.message,
-      ...(err instanceof ValidationError && { errors: err.errors }),
-    });
-  }
-
-  // Log unexpected errors
-  logger.error({
-    error: err.message,
-    stack: err.stack,
-    url: req.url,
-    method: req.method,
-  });
-
-  // Don't leak error details in production
-  const message =
-    process.env.NODE_ENV === "production"
-      ? "Internal server error"
-      : err.message;
-
-  res.status(500).json({
-    status: "error",
-    message,
-  });
-};
-
-// Async error wrapper
-export const asyncHandler = (
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<any>,
-) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
-```
-
+See references/nodejs-backend-patterns/errors.md for custom error classes and the global error handler example.
 ## Database Patterns
 
 Node.js supports both SQL and NoSQL databases. Use connection pooling for all production databases.

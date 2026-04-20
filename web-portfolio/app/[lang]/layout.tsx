@@ -18,7 +18,8 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 //   variable: "--font-playfair",
 // })
 
-export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
 
   return {
@@ -37,13 +38,18 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   }
 }
 
-export default function RootLayout({
-  children,
-  params,
-}: Readonly<{
-  children: React.ReactNode
-  params: { lang: string }
-}>) {
+export default async function RootLayout(
+  props: Readonly<{
+    children: React.ReactNode
+    params: { lang: string }
+  }>
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   return (
     <html lang={params.lang} suppressHydrationWarning>
       <head>
