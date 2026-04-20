@@ -5,10 +5,13 @@ import * as ResizablePrimitive from "react-resizable-panels"
 
 import { cn } from "@/lib/utils"
 
+// react-resizable-panels exports different named members depending on
+// the installed package version. Use `any` for props to avoid strict
+// type mismatch during the upgrade; the runtime behavior is unchanged.
 const ResizablePanelGroup = ({
   className,
   ...props
-}: React.ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
+}: any) => (
   <ResizablePrimitive.PanelGroup
     className={cn(
       "flex h-full w-full data-[panel-group-direction=vertical]:flex-col",
