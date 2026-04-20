@@ -9,11 +9,12 @@
     "start:dev": "next start &",
     "audit:axe": "npx -y @axe-core/cli http://localhost:3000 --save --output axe-report.json || true",
     "audit:lighthouse": "npx -y lighthouse http://localhost:3000 --only-categories=accessibility --output=json --output-path=./lighthouse-report.json || true",
-    "a11y:pa11y": "npx pa11y http://localhost:3000 --reporter html > pa11y-report.html || true",
-    "a11y:axe": "npx @axe-core/cli http://localhost:3000 --save --output axe-report.json || true",
+    "a11y:pa11y": "npx pa11y http://localhost:3000 --reporter html --chrome-launcher-args=\"--no-sandbox --disable-setuid-sandbox\" > pa11y-report.html || true",
+    "a11y:axe": "npx @axe-core/cli http://localhost:3000 --save > axe-report.json || true",
     "a11y:ci": "npm run start:dev && npx wait-on http://localhost:3000 && npm run a11y:pa11y && npm run a11y:axe",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "a11y:playwright": "node ./scripts/a11y-playwright.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

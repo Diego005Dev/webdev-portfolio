@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
 import { motion } from "framer-motion"
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
+import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import LanguageSwitcher from "./language-switcher"
 import { getDictionary } from "@/i18n"
 import type { Dictionary } from "@/i18n"
@@ -120,6 +120,7 @@ export default function Header({ lang }: HeaderProps) {
               </SheetTrigger>
 
               <SheetContent side="top" id="mobile-navigation-sheet" className="md:hidden bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 px-0 py-4">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <nav className="container mx-auto px-4 flex flex-col space-y-4" aria-label="Mobile navigation">
                   {navItems.map((item) => (
                     <Link
