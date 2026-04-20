@@ -18,8 +18,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 //   variable: "--font-playfair",
 // })
 
-export async function generateMetadata(props: { params: Promise<{ lang: string }> }): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
   const dict = await getDictionary(params.lang)
 
   return {

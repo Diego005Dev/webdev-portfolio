@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { describe, it, expect, beforeEach } from 'vitest'
 import { ContactSchema, rateLimitExceededForIp, resetRateLimitStore, extractIp } from '../lib/contact'
 

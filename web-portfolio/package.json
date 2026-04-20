@@ -6,8 +6,12 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
+    "start:dev": "next start &",
     "audit:axe": "npx -y @axe-core/cli http://localhost:3000 --save --output axe-report.json || true",
     "audit:lighthouse": "npx -y lighthouse http://localhost:3000 --only-categories=accessibility --output=json --output-path=./lighthouse-report.json || true",
+    "a11y:pa11y": "npx pa11y http://localhost:3000 --reporter html > pa11y-report.html || true",
+    "a11y:axe": "npx @axe-core/cli http://localhost:3000 --save --output axe-report.json || true",
+    "a11y:ci": "npm run start:dev && npx wait-on http://localhost:3000 && npm run a11y:pa11y && npm run a11y:axe",
     "lint": "next lint",
     "test": "vitest"
   },
@@ -73,6 +77,9 @@
     "postcss": "^8.5",
     "tailwindcss": "^4.1.17",
     "typescript": "^5",
-    "vitest": "^1.3.0"
+    "vitest": "^1.3.0",
+    "@axe-core/cli": "^5.9.0",
+    "pa11y": "^6.1.1",
+    "wait-on": "^7.0.1"
   }
 }

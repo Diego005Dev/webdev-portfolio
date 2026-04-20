@@ -124,28 +124,36 @@ export type Dictionary = {
     }
     comingSoon: string
   }
-  contact: {
-    title: string
-    description: string
-    form: {
-      name: string
-      email: string
-      subject: string
-      message: string
-      sending: string
-      send: string
-      success: string
-      error: string
-    }
-    info: {
+    contact: {
       title: string
-      email: string
-      phone: string
-      linkedin: string
-      github: string
-      location: string
+      description: string
+      form: {
+        name: string
+        email: string
+        subject: string
+        message: string
+        // Optional placeholders for inputs
+        placeholders?: {
+          name?: string
+          email?: string
+          subject?: string
+          message?: string
+        }
+        sending: string
+        send: string
+        success: string
+        error: string
+      }
+      info: {
+        title: string
+        email: string
+        whatsapp?: string
+        phone: string
+        linkedin: string
+        github: string
+        location: string
+      }
     }
-  }
   footer: {
     description: string
     rights: string
