@@ -6,6 +6,7 @@ import { ExternalLink } from "lucide-react"
 import type { Dictionary } from "@/i18n"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 
 interface RetroPortfolioSectionProps {
   dictionary: Dictionary
@@ -41,10 +42,12 @@ export default function RetroPortfolioSection({ dictionary }: RetroPortfolioSect
           </div>
           <div className="relative h-64 md:h-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 dark:to-black/40 z-10"></div>
-            <img
+            <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/RetroPortfolioScreenshot.jpg-m4UxRzY2SMteE6eazLreDNcArKibVG.jpeg"
               alt="Retro Portfolio Preview"
+              fill
               className="w-full h-full object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         </div>

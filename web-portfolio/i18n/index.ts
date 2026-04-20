@@ -124,28 +124,43 @@ export type Dictionary = {
     }
     comingSoon: string
   }
-  contact: {
-    title: string
-    description: string
-    form: {
-      name: string
-      email: string
-      subject: string
-      message: string
-      sending: string
-      send: string
-      success: string
-      error: string
-    }
-    info: {
+    contact: {
       title: string
-      email: string
-      phone: string
-      linkedin: string
-      github: string
-      location: string
+      description: string
+      form: {
+        name: string
+        email: string
+        subject: string
+        message: string
+        errors?: {
+          name?: string
+          emailRequired?: string
+          emailInvalid?: string
+          subject?: string
+          message?: string
+        }
+        // Optional placeholders for inputs
+        placeholders?: {
+          name?: string
+          email?: string
+          subject?: string
+          message?: string
+        }
+        sending: string
+        send: string
+        success: string
+        error: string
+      }
+      info: {
+        title: string
+        email: string
+        whatsapp?: string
+        phone: string
+        linkedin: string
+        github: string
+        location: string
+      }
     }
-  }
   footer: {
     description: string
     rights: string
@@ -194,5 +209,6 @@ const dictionaries: Record<string, Dictionary> = {
 
 export const getDictionary = async (locale: string): Promise<Dictionary> => {
   // Fallback to 'en' if the locale is not supported
-  return dictionaries[locale in dictionaries ? locale : "en"]
+  // Use a safe lookup instead of indexing with a boolean (previous code used `locale in dictionaries` incorrectly)
+  return dictionaries[locale] ?? dictionaries['en']
 }

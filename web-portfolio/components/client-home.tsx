@@ -40,8 +40,8 @@ export function ClientHome({ lang, dictionary }: { lang: string; dictionary: any
     const params = new URLSearchParams(window.location.search)
     params.set("era", currentEra)
 
-    // Update URL without full navigation
-    window.history.replaceState(null, "", `/${lang}${isRetroPage ? "/retro" : ""}?${params.toString()}`)
+    // Update URL without full navigation using Next router
+    router.replace(`/${lang}${isRetroPage ? "/retro" : ""}?${params.toString()}`)
   }, [currentEra, lang, isRetroPage])
 
   const handleForwardEra = () => {
@@ -56,8 +56,8 @@ export function ClientHome({ lang, dictionary }: { lang: string; dictionary: any
     const params = new URLSearchParams(window.location.search)
     params.set("era", nextEra)
 
-    // Update URL without full navigation
-    window.history.replaceState(null, "", `/${lang}${isRetroPage ? "/retro" : ""}?${params.toString()}`)
+    // Update URL without full navigation using Next router
+    router.replace(`/${lang}${isRetroPage ? "/retro" : ""}?${params.toString()}`)
   }
 
   const handleBackwardEra = () => {
@@ -72,8 +72,8 @@ export function ClientHome({ lang, dictionary }: { lang: string; dictionary: any
     const params = new URLSearchParams(window.location.search)
     params.set("era", prevEra)
 
-    // Update URL without full navigation
-    window.history.replaceState(null, "", `/${lang}${isRetroPage ? "/retro" : ""}?${params.toString()}`)
+    // Update URL without full navigation using Next router
+    router.replace(`/${lang}${isRetroPage ? "/retro" : ""}?${params.toString()}`)
   }
 
   // Add this useEffect to ensure theme is properly synchronized

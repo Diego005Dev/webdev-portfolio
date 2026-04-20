@@ -2,7 +2,8 @@ import { getDictionary } from "@/i18n"
 import { ClientHome } from "@/components/client-home"
 import { ThemeProvider } from "@/components/theme-provider"
 
-export default async function RetroPage({ params }: { params: { lang: string } }) {
+export default async function RetroPage(props: { params: Promise<{ lang: string }> }) {
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
 
   return (

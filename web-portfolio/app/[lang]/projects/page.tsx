@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import { getDictionary } from "@/i18n"
 import ProjectsPageClient from "./projects-page-client"
 
-export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
 
   return {
@@ -11,7 +12,8 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   }
 }
 
-export default async function ProjectsPage({ params }: { params: { lang: string } }) {
+export default async function ProjectsPage(props: { params: Promise<{ lang: string }> }) {
+  const params = await props.params;
   const dict = await getDictionary(params.lang)
 
   return <ProjectsPageClient dictionary={dict} lang={params.lang} />

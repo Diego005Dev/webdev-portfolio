@@ -222,26 +222,48 @@ export function PortfolioContent({ currentEra, dictionary }: PortfolioContentPro
               style={{ cursor: project.link ? "pointer" : "default" }}
             >
               {/* Full-size image background */}
-              <div
-                className="w-full aspect-[16/9] relative"
-                onClick={project.link ? () => window.open(project.link, "_blank") : undefined}
-              >
-                <Image
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  fill
-                  priority={index === 0}
-                  className={cn(
-                    "object-cover",
-                    currentEra === "8bit" && "pixel-image",
-                    currentEra === "16bit" && "semi-pixel-image",
-                  )}
-                  style={project.title === dict.projects.project1.title ? { objectPosition: "center 70%" } : {}}
-                />
+                {/* Use a real link for the clickable project preview so it's keyboard accessible */}
+                {project.link ? (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full aspect-[16/9] relative block"
+                  >
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      priority={index === 0}
+                      className={cn(
+                        "object-cover",
+                        currentEra === "8bit" && "pixel-image",
+                        currentEra === "16bit" && "semi-pixel-image",
+                      )}
+                      style={project.title === dict.projects.project1.title ? { objectPosition: "center 70%" } : {}}
+                    />
 
-                {/* Overlay for text readability - Adjusted for light/dark mode */}
-                <div className={cn("absolute inset-0", getOverlayColor())}></div>
-              </div>
+                    {/* Overlay for text readability - Adjusted for light/dark mode */}
+                    <div className={cn("absolute inset-0", getOverlayColor())} aria-hidden="true"></div>
+                  </a>
+                ) : (
+                  <div className="w-full aspect-[16/9] relative">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      priority={index === 0}
+                      className={cn(
+                        "object-cover",
+                        currentEra === "8bit" && "pixel-image",
+                        currentEra === "16bit" && "semi-pixel-image",
+                      )}
+                      style={project.title === dict.projects.project1.title ? { objectPosition: "center 70%" } : {}}
+                    />
+
+                    <div className={cn("absolute inset-0", getOverlayColor())} aria-hidden="true"></div>
+                  </div>
+                )}
 
               {/* Content positioned over the image */}
               <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
@@ -275,30 +297,60 @@ export function PortfolioContent({ currentEra, dictionary }: PortfolioContentPro
                 </div>
 
                 <div className="mt-3 flex items-center justify-between">
-                  <span
-                    className={cn(
-                      "font-medium flex items-center gap-1",
-                      getTextColor(),
-                      currentEra === "8bit" && "pixel-text text-xs",
-                      currentEra === "16bit" && "semi-pixel-text text-base",
-                      currentEra === "32bit" && "text-sm",
-                      "opacity-80 hover:opacity-100",
-                    )}
-                    onClick={project.link ? () => window.open(project.link, "_blank") : undefined}
-                    style={{ textShadow: isDark ? "none" : "0px 1px 2px rgba(0,0,0,0.5)" }}
-                  >
-                    {currentEra === "8bit"
-                      ? dict.sections.projects.openProject
-                      : currentEra === "16bit"
-                        ? dict.sections.projects.viewProject
-                        : dict.sections.projects.visitProject}
-                    <span className="inline-flex items-center justify-center">
-                      <ExternalLink
-                        className="w-3 h-3"
-                        style={{ display: "inline-block", width: "12px", height: "12px" }}
-                      />
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "font-medium flex items-center gap-1",
+                        getTextColor(),
+                        currentEra === "8bit" && "pixel-text text-xs",
+                        currentEra === "16bit" && "semi-pixel-text text-base",
+                        currentEra === "32bit" && "text-sm",
+                        "opacity-80 hover:opacity-100",
+                      )}
+                      style={{ textShadow: isDark ? "none" : "0px 1px 2px rgba(0,0,0,0.5)" }}
+                    >
+                      {currentEra === "8bit"
+                        ? dict.sections.projects.openProject
+                        : currentEra === "16bit"
+                          ? dict.sections.projects.viewProject
+                          : dict.sections.projects.visitProject}
+                      <span className="inline-flex items-center justify-center">
+                        <ExternalLink
+                          className="w-3 h-3"
+                          style={{ display: "inline-block", width: "12px", height: "12px" }}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </a>
+                  ) : (
+                    <span
+                      className={cn(
+                        "font-medium flex items-center gap-1",
+                        getTextColor(),
+                        currentEra === "8bit" && "pixel-text text-xs",
+                        currentEra === "16bit" && "semi-pixel-text text-base",
+                        currentEra === "32bit" && "text-sm",
+                        "opacity-80 hover:opacity-100",
+                      )}
+                      style={{ textShadow: isDark ? "none" : "0px 1px 2px rgba(0,0,0,0.5)" }}
+                    >
+                      {currentEra === "8bit"
+                        ? dict.sections.projects.openProject
+                        : currentEra === "16bit"
+                          ? dict.sections.projects.viewProject
+                          : dict.sections.projects.visitProject}
+                      <span className="inline-flex items-center justify-center">
+                        <ExternalLink
+                          className="w-3 h-3"
+                          style={{ display: "inline-block", width: "12px", height: "12px" }}
+                          aria-hidden="true"
+                        />
+                      </span>
                     </span>
-                  </span>
+                  )}
 
                   {/* Expand/collapse button with special styling for each era */}
                   <button

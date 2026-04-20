@@ -102,25 +102,32 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+type ChartTooltipVariant = "full" | "compact"
+
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
     React.ComponentProps<"div"> & {
-      hideLabel?: boolean
-      hideIndicator?: boolean
+      /**
+       * Variant replaces boolean props hideLabel/hideIndicator. Use "compact"
+       * to hide the label and indicators, "full" to show them.
+       */
+      variant?: ChartTooltipVariant
       indicator?: "line" | "dot" | "dashed"
       nameKey?: string
       labelKey?: string
     }
 >(
   (
-    {
+    props,
+    ref
+  ) => {
+    const {
       active,
       payload,
       className,
       indicator = "dot",
-      hideLabel = false,
-      hideIndicator = false,
+      variant = "full",
       label,
       labelFormatter,
       labelClassName,
@@ -128,13 +135,13 @@ const ChartTooltipContent = React.forwardRef<
       color,
       nameKey,
       labelKey,
-    },
-    ref
-  ) => {
+    } = props as any
     const { config } = useChart()
 
+    const effectiveHideLabel = variant === "compact"
+
     const tooltipLabel = React.useMemo(() => {
-      if (hideLabel || !payload?.length) {
+      if (effectiveHideLabel || !payload?.length) {
         return null
       }
 
@@ -163,7 +170,6 @@ const ChartTooltipContent = React.forwardRef<
       label,
       labelFormatter,
       payload,
-      hideLabel,
       labelClassName,
       config,
       labelKey,
@@ -172,6 +178,8 @@ const ChartTooltipContent = React.forwardRef<
     if (!active || !payload?.length) {
       return null
     }
+
+    const effectiveHideIndicator = variant === "compact"
 
     const nestLabel = payload.length === 1 && indicator !== "dot"
 
@@ -185,7 +193,7 @@ const ChartTooltipContent = React.forwardRef<
       >
         {!nestLabel ? tooltipLabel : null}
         <div className="grid gap-1.5">
-          {payload.map((item, index) => {
+          {payload.map((item: any, index: number) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
             const indicatorColor = color || item.payload.fill || item.color
@@ -202,10 +210,10 @@ const ChartTooltipContent = React.forwardRef<
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (
                   <>
-                    {itemConfig?.icon ? (
+                      {itemConfig?.icon ? (
                       <itemConfig.icon />
                     ) : (
-                      !hideIndicator && (
+                      !effectiveHideIndicator && (
                         <div
                           className={cn(
                             "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
@@ -260,16 +268,17 @@ const ChartLegend = RechartsPrimitive.Legend
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-      hideIcon?: boolean
-      nameKey?: string
-    }
->(
-  (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
-    ref
-  ) => {
+  React.ComponentProps<"div"> & {
+    payload?: any[]
+    verticalAlign?: RechartsPrimitive.LegendProps['verticalAlign']
+    /** Use `compact` to hide icons/labels, `full` to show them */
+    variant?: ChartTooltipVariant
+    nameKey?: string
+  }
+>((
+  { className, variant = "full", payload, verticalAlign = "bottom", nameKey },
+  ref
+) => {
     const { config } = useChart()
 
     if (!payload?.length) {
@@ -296,7 +305,7 @@ const ChartLegendContent = React.forwardRef<
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}
             >
-              {itemConfig?.icon && !hideIcon ? (
+              {itemConfig?.icon && variant !== "compact" ? (
                 <itemConfig.icon />
               ) : (
                 <div
@@ -363,3 +372,6 @@ export {
   ChartLegendContent,
   ChartStyle,
 }
+
+// Backwards-compatible aliases: some callsites may have been using hideLabel/
+// hideIndicator/hideIcon. Consumers should migrate to `variant="compact"`.

@@ -82,9 +82,6 @@ const SidebarProvider = React.forwardRef<
         } else {
           _setOpen(openState)
         }
-
-        // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
       },
       [setOpenProp, open]
     )
@@ -115,6 +112,17 @@ const SidebarProvider = React.forwardRef<
     // We add a state so that we can do data-state="expanded" or "collapsed".
     // This makes it easier to style the sidebar with Tailwind classes.
     const state = open ? "expanded" : "collapsed"
+
+    // Persist the `open` state to a cookie. Keep side-effects out of setters to
+    // make the API testable and predictable. This effect runs whenever `open`
+    // changes and writes the cookie accordingly.
+    React.useEffect(() => {
+      try {
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      } catch (e) {
+        // Silently ignore in environments where document is not available
+      }
+    }, [open])
 
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
@@ -195,7 +203,8 @@ const Sidebar = React.forwardRef<
     if (isMobile) {
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <SheetContent
+      <SheetContent
+            id="sidebar-mobile"
             data-sidebar="sidebar"
             data-mobile="true"
             className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
@@ -247,6 +256,7 @@ const Sidebar = React.forwardRef<
           {...props}
         >
           <div
+            id="sidebar-desktop"
             data-sidebar="sidebar"
             className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
           >
@@ -263,7 +273,10 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, isMobile, open, openMobile } = useSidebar()
+
+  const expanded = isMobile ? openMobile : open
+  const controls = isMobile ? "sidebar-mobile" : "sidebar-desktop"
 
   return (
     <Button
@@ -276,6 +289,8 @@ const SidebarTrigger = React.forwardRef<
         onClick?.(event)
         toggleSidebar()
       }}
+      aria-expanded={expanded}
+      aria-controls={controls}
       {...props}
     >
       <PanelLeft />
@@ -296,7 +311,11 @@ const SidebarRail = React.forwardRef<
       ref={ref}
       data-sidebar="rail"
       aria-label="Toggle Sidebar"
-      tabIndex={-1}
+      // Make the rail keyboard-focusable so keyboard users can toggle the
+      // sidebar. We intentionally set tabIndex=0 to allow tab focus. If the
+      // rail should be skipped in the tab order in specific contexts, callers
+      // can override via props.
+      tabIndex={0}
       onClick={toggleSidebar}
       title="Toggle Sidebar"
       className={cn(
@@ -525,10 +544,15 @@ const sidebarMenuButtonVariants = cva(
         sm: "h-7 text-xs",
         lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
       },
+      state: {
+        default: "",
+        active: "",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      state: "default",
     },
   }
 )
@@ -562,7 +586,13 @@ const SidebarMenuButton = React.forwardRef<
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        className={cn(
+          // Map the boolean isActive into the cva `state` variant. We keep
+          // the isActive prop for backwards compatibility while centralizing
+          // visual styles in the cva definition.
+          sidebarMenuButtonVariants({ variant, size, state: isActive ? "active" : "default" }),
+          className
+        )}
         {...props}
       />
     )
@@ -601,6 +631,12 @@ const SidebarMenuAction = React.forwardRef<
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
 
+  // Use cva-like mapping via conditional class application. Keep the
+  // showOnHover boolean for backwards compatibility but centralize the
+  // hoverable variant styling here.
+  const hoverableClass =
+    "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
+
   return (
     <Comp
       ref={ref}
@@ -613,8 +649,7 @@ const SidebarMenuAction = React.forwardRef<
         "peer-data-[size=default]/menu-button:top-1.5",
         "peer-data-[size=lg]/menu-button:top-2.5",
         "group-data-[collapsible=icon]:hidden",
-        showOnHover &&
-          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+        showOnHover ? hoverableClass : "",
         className
       )}
       {...props}
@@ -662,6 +697,8 @@ const SidebarMenuSkeleton = React.forwardRef<
       className={cn("rounded-md h-8 flex gap-2 px-2 items-center", className)}
       {...props}
     >
+      {/* Keep showIcon for compatibility, but prefer a variant prop in
+          future to express skeleton styles. */}
       {showIcon && (
         <Skeleton
           className="size-4 rounded-md"
@@ -705,22 +742,31 @@ const SidebarMenuSubItem = React.forwardRef<
 >(({ ...props }, ref) => <li ref={ref} {...props} />)
 SidebarMenuSubItem.displayName = "SidebarMenuSubItem"
 
+type SidebarMenuSubButtonVariant = "default" | "active"
+
 const SidebarMenuSubButton = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentProps<"a"> & {
     asChild?: boolean
     size?: "sm" | "md"
     isActive?: boolean
+    /**
+     * Variant offers an explicit alternative to the boolean isActive
+     * prop. When provided, variant takes precedence over isActive.
+     */
+    variant?: SidebarMenuSubButtonVariant
   }
->(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
+>(({ asChild = false, size = "md", isActive, variant, className, ...props }, ref) => {
   const Comp = asChild ? Slot : "a"
+  const effectiveIsActive =
+    variant === "active" ? true : variant === "default" ? false : !!isActive
 
   return (
     <Comp
       ref={ref}
       data-sidebar="menu-sub-button"
       data-size={size}
-      data-active={isActive}
+      data-active={effectiveIsActive}
       className={cn(
         "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
         "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",

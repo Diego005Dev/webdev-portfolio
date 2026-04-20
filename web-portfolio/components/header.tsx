@@ -5,7 +5,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
+import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import LanguageSwitcher from "./language-switcher"
 import { getDictionary } from "@/i18n"
 import type { Dictionary } from "@/i18n"
@@ -20,8 +21,7 @@ export default function Header({ lang }: HeaderProps) {
   const [dictionary, setDictionary] = useState<Dictionary | null>(null)
   const pathname = usePathname()
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-  const closeMenu = () => setIsMenuOpen(false)
+  // menu open state is controlled by the Sheet component via setIsMenuOpen
 
   useEffect(() => {
     const loadDictionary = async () => {
@@ -106,46 +106,44 @@ export default function Header({ lang }: HeaderProps) {
             <div className="inline-flex items-center justify-center">
               <ThemeToggle dictionary={dictionary} />
             </div>
-            <button
-              onClick={toggleMenu}
-              className="ml-4 p-2 text-neutral-700 dark:text-neutral-300 hover:text-petrol dark:hover:text-petrol-light"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="ml-4 p-2 text-neutral-700 dark:text-neutral-300 hover:text-petrol dark:hover:text-petrol-light"
+                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                  aria-expanded={isMenuOpen}
+                  aria-controls="mobile-navigation-sheet"
+                >
+                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+              </SheetTrigger>
+
+              <SheetContent side="top" id="mobile-navigation-sheet" className="md:hidden bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 px-0 py-4">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <nav className="container mx-auto px-4 flex flex-col space-y-4" aria-label="Mobile navigation">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      href={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`py-2 font-medium ${
+                        pathname === item.path
+                          ? "text-petrol dark:text-petrol-light"
+                          : "text-neutral-700 dark:text-neutral-300"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800"
-          >
-            <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  onClick={closeMenu}
-                  className={`py-2 font-medium ${
-                    pathname === item.path
-                      ? "text-petrol dark:text-petrol-light"
-                      : "text-neutral-700 dark:text-neutral-300"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile navigation now handled by accessible Sheet (Radix) */}
     </header>
   )
 }

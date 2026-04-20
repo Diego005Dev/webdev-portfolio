@@ -6,13 +6,8 @@ const locales = ['en', 'es']
 const defaultLocale = 'en'
 
 function getLocale(request: NextRequest): string {
-  // Get the accept-language header
   const acceptLanguage = request.headers.get('accept-language') || ''
-
-  // Parse the languages
   const languages = new Negotiator({ headers: { 'accept-language': acceptLanguage } }).languages()
-
-  // Match the best locale
   try {
     return match(languages, locales, defaultLocale)
   } catch {
@@ -20,7 +15,8 @@ function getLocale(request: NextRequest): string {
   }
 }
 
-export function middleware(request: NextRequest) {
+// Renamed middleware -> proxy to match Next.js 16 conventions.
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Skip middleware for API routes, static files, etc.
@@ -37,16 +33,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Check if pathname is missing locale
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
 
   if (pathnameIsMissingLocale) {
-    // Detect user's preferred locale
     const locale = getLocale(request)
-
-    // Redirect to the detected locale
     const newUrl = new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url)
     return NextResponse.redirect(newUrl)
   }
@@ -55,8 +47,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // Skip all internal paths (_next)
-    '/((?!_next).*)',
-  ],
+  // Exclude internal and api routes from locale middleware
+  matcher: ['/((?!_next|api).*)'],
 }

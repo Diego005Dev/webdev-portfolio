@@ -1,0 +1,49 @@
+name: Accessibility CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Start production server
+        run: |
+          nohup npm start &> ./server.log &
+          npx wait-on http://localhost:3000 --timeout 120000
+
+      - name: Run pa11y (accessibility smoke)
+        run: npm run a11y:pa11y || true
+
+      - name: Run axe-core CLI
+        run: npm run a11y:axe || true
+
+      - name: Run Lighthouse accessibility audit
+        run: npm run audit:lighthouse || true
+
+      - name: Upload accessibility artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-reports
+          path: |
+            pa11y-report.html
+            axe-report.json
+            lighthouse-report.json
+            server.log
