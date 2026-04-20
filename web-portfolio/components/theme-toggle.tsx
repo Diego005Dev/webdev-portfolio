@@ -32,12 +32,13 @@ export function ThemeToggle({ dictionary }: ThemeToggleProps) {
   }
 
   if (!mounted) {
+    // Render a non-interactive placeholder while hydrating to avoid
+    // exposing an interactive element with aria-hidden to assistive tech.
     return (
-      <Button
-        variant="ghost"
-        size="sm"
+      <div
         className="w-9 h-9 opacity-0 pointer-events-none"
         aria-hidden="true"
+        role="presentation"
       />
     )
   }

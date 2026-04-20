@@ -1,10 +1,10 @@
-name: Accessibility Audit
+name: Accessibility CI
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
 
 jobs:
   accessibility:
@@ -13,33 +13,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build --if-present
 
-      - name: Start app
+      - name: Start production server
         run: |
-          nohup npm run start &
-          # wait for server to be ready
-          npx wait-on http://localhost:3000
+          nohup npm start &> ./server.log &
+          npx wait-on http://localhost:3000 --timeout 120000
+
+      - name: Run pa11y (accessibility smoke)
+        run: npm run a11y:pa11y || true
 
       - name: Run axe-core CLI
-        run: npx @axe-core/cli http://localhost:3000 --save --output=./reports/axe-report.json || true
+        run: npm run a11y:axe || true
 
-      - name: Run Lighthouse (accessibility only)
-        run: npx lighthouse http://localhost:3000 --only-categories=accessibility --output=json --output-path=./reports/lighthouse-report.json || true
+      - name: Run Lighthouse accessibility audit
+        run: npm run audit:lighthouse || true
 
-      - name: Upload reports
+      - name: Upload accessibility artifacts
         uses: actions/upload-artifact@v4
         with:
           name: accessibility-reports
           path: |
-            ./reports/axe-report.json
-            ./reports/lighthouse-report.json
+            pa11y-report.html
+            axe-report.json
+            lighthouse-report.json
+            server.log

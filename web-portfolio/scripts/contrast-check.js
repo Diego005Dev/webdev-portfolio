@@ -2,10 +2,21 @@ const fs = require('fs');
 const path = require('path');
 
 function parseVars(cssText, selector) {
-  const rx = new RegExp(selector + "\s*{([\s\S]*?)}", 'm');
-  const match = cssText.match(rx);
-  if (!match) return {};
-  const body = match[1];
+  // Find the block for selector and extract variables using brace matching
+  const idx = cssText.indexOf(selector);
+  if (idx === -1) return {};
+  // find first '{' after idx
+  let i = cssText.indexOf('{', idx);
+  if (i === -1) return {};
+  i++;
+  let depth = 1;
+  let j = i;
+  while (j < cssText.length && depth > 0) {
+    if (cssText[j] === '{') depth++;
+    else if (cssText[j] === '}') depth--;
+    j++;
+  }
+  const body = cssText.slice(i, j - 1);
   const lines = body.split(/;\s*/);
   const vars = {};
   for (const line of lines) {

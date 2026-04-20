@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { ContactSchema, rateLimitExceededForIp, extractIp } from '@/lib/contact'
+import { ContactSchema, rateLimitExceededForIp, extractIp } from '../../../lib/contact'
+import { captureException } from '../../../lib/observability'
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,8 +25,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true }, { status: 201 })
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('[contact] error', err)
+    // Report and return a generic server error
+    await captureException(err as unknown, { route: '/api/contact' })
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }

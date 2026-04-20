@@ -79,7 +79,11 @@
     border-color: rgb(var(--border));
   }
   body {
-    @apply bg-background text-foreground;
+    /* Avoid using @apply for custom color utilities which can fail
+       during Tailwind processing in some environments. Use the
+       underlying CSS variables directly. */
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
   }
 
   h1,
@@ -88,7 +92,9 @@
   h4,
   h5,
   h6 {
-    @apply font-display;
+    /* Use the same font stack defined in tailwind.config.js for `display`.
+       Avoid @apply to prevent Tailwind JIT resolution errors during build. */
+    font-family: Inter, ui-sans-serif, system-ui;
   }
 }
 

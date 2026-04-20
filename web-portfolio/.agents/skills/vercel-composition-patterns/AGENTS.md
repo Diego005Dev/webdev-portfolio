@@ -944,3 +944,52 @@ const value = use(MyContext)
 1. [https://react.dev](https://react.dev)
 2. [https://react.dev/learn/passing-data-deeply-with-context](https://react.dev/learn/passing-data-deeply-with-context)
 3. [https://react.dev/reference/react/use](https://react.dev/reference/react/use)
+
+---
+
+## Repo Audit — Applied Fixes and Migration Notes
+
+Summary of automated, low-risk fixes applied to the project as part of an
+audit following these composition rules. The changes are minimal and
+backwards-compatible when possible; they centralize behavior and reduce
+boolean-prop proliferation.
+
+- Sidebar
+  - Moved persistence of sidebar open state (cookie) out of the setter and
+    into a useEffect to decouple side-effects from state-updaters.
+  - Added aria-expanded / aria-controls on SidebarTrigger and IDs on mobile
+    and desktop sidebar containers (sidebar-mobile, sidebar-desktop) so
+    screen readers can associate triggers with panels.
+  - Made SidebarRail keyboard-focusable (tabIndex=0) to allow toggling via
+    keyboard; callers can override this prop if needed.
+  - Converted boolean visual props into explicit variants where appropriate
+    (e.g. SidebarMenuButton maps isActive → internal state variant;
+    SidebarMenuSubButton gained a variant prop that takes precedence over
+    isActive).
+
+- Chart
+  - Replaced internal boolean tooltip/legend props (hideLabel, hideIndicator,
+    hideIcon) with an explicit variant API for the tooltip/legend components
+    (variant="full" | "compact"). This centralizes the visual modes and
+    simplifies the public API.
+
+- Pagination
+  - PaginationLink now accepts variant?: ButtonProps['variant'] and falls
+    back to deriving the variant from the legacy isActive boolean for
+    compatibility.
+
+- Accessibility
+  - Carousel container made focusable and given a default aria-label when one
+    is not provided; keyboard handlers already supported arrow navigation.
+
+Migration notes
+- Most changes are backwards-compatible; in-place callsites should continue
+  to work.
+- Important API migrations to consider when updating external usages:
+  - If you relied on ChartTooltipContent hideLabel/hideIndicator or
+    ChartLegendContent hideIcon, migrate to using variant="compact".
+  - If you passed isActive to menu buttons, you can continue to do so; the
+    API now also supports explicit variant props (preferred for clarity).
+
+If you want, I can generate a short PR summary or a changelog entry for the
+git history describing these modifications.
